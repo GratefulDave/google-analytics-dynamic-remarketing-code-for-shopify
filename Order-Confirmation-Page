@@ -1,0 +1,27 @@
+<!-- google dynamic remarketing tag for order confirmation page -->
+<script type="text/javascript">
+var id = new Array();
+{% for line_item in order.line_items %} 
+id.push('shopify_US_{{line_item.product.id}}_{{line_item.variant.id}}');
+{% endfor %}
+   var google_tag_params = {
+       ecomm_prodid: id,
+       ecomm_pagetype: 'purchase',
+       ecomm_totalvalue: parseFloat('{{ subtotal_price | money_without_currency | remove: ","}}')
+   };
+</script>
+    
+    <script> 
+    window.addEventListener('load',function(){
+	  try { 
+		ga('set', 'dimension1', window.google_tag_params.ecomm_prodid.toString()); // Please make sure that Dimension 1 is set as the Custom Dimension for Product ID 
+	  } catch (e) {} 
+	  try { 
+		ga('set', 'dimension2', window.google_tag_params.ecomm_pagetype.toString()); // Please make sure that Dimension 2 is set as the Custom Dimension for Page Type 
+	  } catch (e) {} 
+	  try { 
+		ga('set', 'dimension3', window.google_tag_params.ecomm_totalvalue.toString()); // Please make sure that Dimension 3 is set as the Custom Dimension for Total Value 
+	  } catch (e) {} 
+		ga('send', 'event', 'page', 'visit', window.google_tag_params.ecomm_pagetype.toString(), { 'nonInteraction': 1 }); 
+    })
+</script>
