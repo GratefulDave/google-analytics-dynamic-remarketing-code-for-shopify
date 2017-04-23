@@ -1,5 +1,6 @@
-# google-analytics-shopify-remarketing-code
-Google Analytics Shopify Remarketing Code
+# google-analytics-dynamic-remarketing-code-for-shopify
+
+Google Analytics Dynamic Remarketing Code
 
 First, you will have to enable Google Analytics in Online Store->Preferences by pasting your tracking code & enabling enhanced e-commerce.
 
