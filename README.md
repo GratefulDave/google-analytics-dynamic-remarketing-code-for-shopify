@@ -7,6 +7,8 @@ Second, for account set-up follow the directions here: https://support.google.co
 
 Third, you will have to set up a Google Merchant Account & can use Shopify's Google Shopping App. If you are dropshipping and your item does not have a GTIN ot product identifier there is a checkbox you can mark to indicate the products do not have product identifiers. If you do not do this your feed will have errors and not work.
 
+Fourth, you need to add the remarketing confirmation code. 
+
 Finally, to add retail audiences you can use the link on this page: https://support.google.com/analytics/answer/3457161?hl=en
 
 Please note: When I had Google automatically import the Retail audiences for some reason the wrong variables were passed to my account. The variables should be:
