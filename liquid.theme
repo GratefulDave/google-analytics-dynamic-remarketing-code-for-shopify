@@ -1,0 +1,73 @@
+<!-- google dynamic remarketing tag for theme.liquid -->
+<!-- PLACE THIS CODE RIGHT BEFORE THE CLOSING /BODY TAG -->
+
+    {% if template contains 'product' %}
+        <script type="text/javascript">
+            var json_product = {{ product | json }};
+        </script>
+        <script>
+            var ecomm_prodid= 'shopify_US_{{product.id}}_'+variant.id;
+            //for(var i=0;i<json_product.variants.length;i++)
+             //   ecomm_prodid.push('shopify_US_{{product.id}}_'+json_product.variants[i].id);
+        </script>
+        <script type="text/javascript">
+            var google_tag_params = {
+                ecomm_prodid: ecomm_prodid,
+                ecomm_pagetype: 'product',
+                ecomm_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
+            };
+        </script>
+    {% elsif template contains 'collection' %}
+        <script type="text/javascript">
+            var google_tag_params = {
+                ecomm_pagetype: 'category'
+            };
+        </script>
+    {% elsif template contains 'cart' %}
+        <script type="text/javascript">
+        var id = new Array();
+        {% for item in cart.items %}
+        id.push('shopify_US_{{item.product.id}}_{{item.variant.id}}');
+        {% endfor %}
+        
+            var google_tag_params = {
+                ecomm_prodid: id,
+                ecomm_pagetype: 'cart',
+                ecomm_totalvalue: parseFloat('{{ cart.total_price | money_without_currency | remove: ","}}')
+            };
+        </script>
+    {% elsif template contains 'search' %}
+        <script type="text/javascript">
+            var google_tag_params = {
+                  ecomm_pagetype: 'searchresults'
+        };
+        </script>
+    {% elsif template contains 'index' %}
+        <script type="text/javascript">
+            var google_tag_params = {
+                ecomm_pagetype: 'home'
+            };
+        </script>
+    {% else %}
+        <script type="text/javascript">
+            var google_tag_params = {
+                ecomm_pagetype: 'other'
+            };
+        </script>
+    {% endif %}
+
+    
+    <script> 
+    window.addEventListener('load',function(){
+	  try { 
+		ga('set', 'dimension1', window.google_tag_params.ecomm_prodid.toString()); // Please make sure that Dimension 1 is set as the Custom Dimension for Product ID 
+	  } catch (e) {} 
+	  try { 
+		ga('set', 'dimension2', window.google_tag_params.ecomm_pagetype.toString()); // Please make sure that Dimension 2 is set as the Custom Dimension for Page Type 
+	  } catch (e) {} 
+	  try { 
+		ga('set', 'dimension3', window.google_tag_params.ecomm_totalvalue.toString()); // Please make sure that Dimension 3 is set as the Custom Dimension for Total Value 
+	  } catch (e) {} 
+		ga('send', 'event', 'page', 'visit', window.google_tag_params.ecomm_pagetype.toString(), { 'nonInteraction': 1 }); 
+    })
+</script>
